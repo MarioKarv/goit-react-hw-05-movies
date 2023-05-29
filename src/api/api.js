@@ -1,36 +1,37 @@
-const BASE_URL = 'https://api.themoviedb.org/3';
-const KEY = 'c8c5142f4be3b54c36c807e0ef85cecf';
-export const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
+import axios from 'axios';
+const instance = axios.create({
+  baseURL: 'https://api.themoviedb.org/3/',
+  params: {
+    api_key: 'c8c5142f4be3b54c36c807e0ef85cecf',
+  },
+});
 
-async function fetchWithErrorHandling(url = '', config = {}) {
-    const response = await fetch(url, config);
-    return response.ok ? await response.json() : Promise.reject(new Error('Not found'));
-}
-
-export function fetchTrendingMovies() {
-  return fetchWithErrorHandling(`${BASE_URL}/trending/all/day?api_key=${KEY}`);
-}
-
-export function fetchMoviesId(movieId) {
-  return fetchWithErrorHandling(
-    `${BASE_URL}/movie/${movieId}?api_key=${KEY}&language=en-US`
-  );
-}
-
-export function fetchMovieSearch(query) {
-  return fetchWithErrorHandling(
-    `${BASE_URL}/search/movie?api_key=${KEY}&query=${query}&language=en-US&page=1&include_adult=false`
-  );
-}
-
-export function fetchMovieCast(movieId) {
-  return fetchWithErrorHandling(
-    `${BASE_URL}/movie/${movieId}/credits?api_key=${KEY}&language=en-US`
-  );
-}
-
-export function fetchMovieReviews(movieId) {
-  return fetchWithErrorHandling(
-    `${BASE_URL}/movie/${movieId}/reviews?api_key=${KEY}&language=en-US`
-  );
-}
+const getTrending = async () => {
+  const { data } = await instance.get('/trending/movie/day');
+  return data;
+};
+const searchMovies = async search => {
+  const { data } = await instance.get('/search/movie', {
+    params: { query: search },
+  });
+  return data;
+};
+const getMovieById = async id => {
+  const data = await instance.get(`/movie/${id}`);
+  return data;
+};
+const getMovieReviews = async id => {
+  const data = await instance.get(`/movie/${id}/reviews`);
+  return data;
+};
+const getMovieCast = async id => {
+  const data = await instance.get(`/movie/${id}/credits`);
+  return data;
+};
+export {
+  getTrending,
+  searchMovies,
+  getMovieById,
+  getMovieReviews,
+  getMovieCast,
+};
