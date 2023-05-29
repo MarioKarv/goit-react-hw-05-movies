@@ -6,6 +6,8 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
+import noimg from 'images/noImage.jpg';
+import css from './MovieDetails.module.css'
 import { getMovieById } from 'api/api';
 
 const MovieDetails = () => {
@@ -27,7 +29,7 @@ const MovieDetails = () => {
         const date = chosenMovie.data.realease_date.slice(0, 4);
         setYear(date);
       } catch ({ response }) {
-        console.log(response.data.message);
+        console.log(response);
       }
     };
     fetchMovie();
@@ -35,13 +37,21 @@ const MovieDetails = () => {
 
   return (
     <>
-      <button onClick={backButton}>Go back</button>
-      <div>
+      <button onClick={backButton} className={css.button}>
+        Go back
+      </button>
+      <div className={css.wrapper}>
         <img
           alt={title}
-          src={`https://image.tmdb.org/t/p/w500${backdrop_path}`}
+        //   src={`https://image.tmdb.org/t/p/w500${backdrop_path}`}
+          src={
+            backdrop_path
+              ? `https://image.tmdb.org/t/p/w500${backdrop_path}`
+              : noimg
+          }
+          className={css.img}
         />
-        <ul>
+        <ul className={css.list}>
           <li>
             <h1>
               {title} {year}
@@ -58,17 +68,22 @@ const MovieDetails = () => {
         </ul>
       </div>
 
-      <p>Additional information</p>
-      <ul>
-        <li>
-          <Link to={`/movies/${id}/cast`} state={{ from: location.state.from }}>
+      <p className={css.p}>Additional information</p>
+      <ul className={css.castUl}>
+        <li className={css.castli}>
+          <Link
+            to={`/movies/${id}/cast`}
+            state={{ from: location.state.from }}
+            className={css.link}
+          >
             Cast
           </Link>
         </li>
-        <li>
+        <li className={css.castli}>
           <Link
             to={`/movies/${id}/reviews`}
             state={{ from: location.state.from }}
+            className={css.link}
           >
             Reviews
           </Link>

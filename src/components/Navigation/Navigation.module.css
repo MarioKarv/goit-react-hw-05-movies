@@ -1,0 +1,29 @@
+.nav {
+  width: 100%;
+  border-bottom: 3px solid #bbbbbb;
+}
+
+.ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.li{
+    font-weight: 700;
+    font-size: large;
+    
+}
+
+.link {
+  padding: 10px;
+  color: black;
+  display: inline-block;
+  text-decoration: none;
+  transition: all linear 250ms;
+}
+
+.link:global(.active) {
+  color: rgb(10, 180, 236);
+}

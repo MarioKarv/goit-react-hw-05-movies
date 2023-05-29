@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link, useLocation } from 'react-router-dom';
 import { searchMovies } from 'api/api';
+import { BiSearchAlt } from 'react-icons/bi';
+import css from './Movies.module.css'
 
 const Movies = () => {
   const location = useLocation();
@@ -9,8 +11,8 @@ const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
   const elements = items?.map(({ id, title }) => (
-    <li key={id}>
-      <Link to={`/movies/${id}`} state={{ from: location }}>
+    <li key={id} className={css.li}>
+      <Link to={`/movies/${id}`} state={{ from: location }} className={css.link}>
         {title}
       </Link>
     </li>
@@ -24,12 +26,14 @@ const Movies = () => {
   return (
     <>
       <form
+        className={css.form}
         onSubmit={e => {
           e.preventDefault();
           setSearchParams({ query: search });
         }}
       >
         <input
+          className={css.input}
           onChange={({ target }) => {
             setSearch(target.value);
             setSearchParams({ query: target.value });
@@ -37,9 +41,11 @@ const Movies = () => {
           type="text"
           name="search"
         />
-        <button type="submit">Search</button>
-          </form>
-          <ul>{elements}</ul>
+        <button type="submit" className={css.button}>
+          <BiSearchAlt size={25} />
+        </button>
+      </form>
+      <ul className={css.ul}>{elements}</ul>
     </>
   );
 };

@@ -1,0 +1,28 @@
+.link{
+    text-decoration: none;
+    font-weight: 700;
+    font-size: large;
+    color: black;
+    transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.link:hover,
+.link:focus{
+    color:blue;
+}
+
+.ul{
+    list-style: none;
+}
+
+.li{
+   text-align: center;
+}
+
+.h1{
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: lightgray;
+}
